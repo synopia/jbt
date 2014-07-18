@@ -1,0 +1,21 @@
+//mainClassName = "jbtc"
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+
+    sourceCompatibility = "1.7"
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.codehaus.groovy:groovy-all:2.3.3'
+        compile 'org.ow2.asm:asm:5.0.3'
+        compile 'org.ow2.asm:asm-util:5.0.3'
+
+        testCompile 'junit:junit:4.11'
+    }
+
+}

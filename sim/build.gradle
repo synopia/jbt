@@ -1,0 +1,17 @@
+apply plugin: 'application'
+
+mainClassName = "test"
+
+dependencies {
+    compile project(":core")
+    compile project(":asm")
+    compile 'org.codehaus.groovyfx:groovyfx:0.4.0'
+}
+
+task makeDirs(description: 'make all dirs for project setup') << {
+    def sources = [sourceSets.main, sourceSets.test]
+    sources*.allSource*.srcDirs.flatten().each { File srcDir ->
+        println "making $srcDir"
+        srcDir.mkdirs()
+    }
+}

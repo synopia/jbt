@@ -1,0 +1,10 @@
+apply plugin: 'application'
+
+mainClassName = "jbtc"
+
+dependencies {
+    compile project(":core")
+    compile 'commons-cli:commons-cli:1.2'
+    compile 'org.ow2.asm:asm-analysis:5.0.3'
+    compile 'org.ow2.asm:asm-commons:5.0.3'
+}
