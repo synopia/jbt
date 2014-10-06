@@ -2,13 +2,14 @@ package org.synopia.behavior.nodes
 
 import org.synopia.behavior.BehaviorNode
 import org.synopia.behavior.GlobalVariable
+import org.synopia.behavior.Visitor
 import org.synopia.behavior.generators.BTMethodGenerator
 import org.synopia.behavior.tree.BehaviorAction
 
 /**
  * Created by synopia on 17.07.2014.
  */
-abstract class BaseBehaviorNode implements BehaviorNode {
+abstract class BaseBehaviorNode implements BehaviorNode<BehaviorNode> {
     BehaviorNode parent
     int id = 0
     Map debug
@@ -140,4 +141,38 @@ abstract class BaseBehaviorNode implements BehaviorNode {
         return target
     }
 
+    @Override
+    void insertChild(int index, BehaviorNode child) {
+        throw new IllegalStateException("Not allowed");
+    }
+
+    @Override
+    void replaceChild(int index, BehaviorNode child) {
+        throw new IllegalStateException("Not allowed");
+    }
+
+    @Override
+    BehaviorNode removeChild(int index) {
+        throw new IllegalStateException("Not allowed");
+    }
+
+    @Override
+    BehaviorNode getChild(int index) {
+        throw new IllegalStateException("Not allowed");
+    }
+
+    @Override
+    int getChildrenCount() {
+        return 0
+    }
+
+    @Override
+    int getMaxChildren() {
+        return 0
+    }
+
+    @Override
+    def <T> T visit(T item, Visitor<T> visitor) {
+        return visitor.visit(item, this);
+    }
 }

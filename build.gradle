@@ -1,10 +1,15 @@
 //mainClassName = "jbtc"
+
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'idea'
+    apply plugin: 'maven-publish'
 
     sourceCompatibility = "1.7"
+    group 'org.terasology.jbt'
+    version '0.1.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
@@ -18,4 +23,19 @@ subprojects {
         testCompile 'junit:junit:4.11'
     }
 
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+
+                from components.java
+            }
+        }
+        repositories {
+            maven {
+                url "$buildDir/../../../repo"
+            }
+        }
+
+    }
 }

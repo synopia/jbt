@@ -88,4 +88,49 @@ class BehaviorTreeNode extends BaseBehaviorNode {
         super.assembleTearDown()
         root.assembleTearDown()
     }
+
+    @Override
+    public void insertChild(int index, BehaviorNode newChild) {
+        this.root = newChild;
+    }
+
+    @Override
+    public void replaceChild(int index, BehaviorNode newChild) {
+        this.root = newChild;
+    }
+
+    @Override
+    public BehaviorNode removeChild(int index) {
+        BehaviorNode old = root;
+        root = null;
+        return old;
+    }
+
+    @Override
+    public BehaviorNode getChild(int index) {
+        return root;
+    }
+
+    @Override
+    public int getChildrenCount() {
+        return root == null ? 0 : 1;
+    }
+
+    @Override
+    public int getMaxChildren() {
+        return 1;
+    }
+
+    public void setChild(BehaviorNode child) {
+        this.root = child;
+    }
+
+    @Override
+    public <T> T visit(T item, Visitor<T> visitor) {
+        T visit = super.visit(item, visitor);
+        if (root != null) {
+            root.visit(visit, visitor);
+        }
+        return visit;
+    }
 }

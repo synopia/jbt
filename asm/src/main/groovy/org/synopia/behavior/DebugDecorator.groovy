@@ -49,4 +49,38 @@ class DebugDecorator implements BehaviorNode {
         delegate.name()
     }
 
+    @Override
+    void insertChild(int index, Object child) {
+        delegate.insertChild(index, child)
+    }
+
+    @Override
+    void replaceChild(int index, Object child) {
+        delegate.replaceChild(index, child)
+    }
+
+    @Override
+    Object removeChild(int index) {
+        return delegate.removeChild(index)
+    }
+
+    @Override
+    Object getChild(int index) {
+        return delegate.getChild(index)
+    }
+
+    @Override
+    int getChildrenCount() {
+        return delegate.getChildrenCount()
+    }
+
+    @Override
+    int getMaxChildren() {
+        return delegate.getMaxChildren()
+    }
+
+    @Override
+    def <T> T visit(Object item, Visitor<T> visitor) {
+        return delegate.visit(item, visitor);
+    }
 }

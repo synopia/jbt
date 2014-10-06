@@ -1,6 +1,7 @@
 package org.synopia.behavior.nodes
 
 import org.objectweb.asm.Label
+import org.synopia.behavior.Visitor
 import org.synopia.behavior.generators.BTMethodGenerator
 import org.synopia.behavior.tree.BehaviorAction
 import org.synopia.behavior.BehaviorNode
@@ -12,7 +13,7 @@ import static org.objectweb.asm.commons.GeneratorAdapter.NE
  * Created by synopia on 12.07.2014.
  */
 class DecoratorNode extends BaseBehaviorNode {
-    protected BehaviorNode child
+    private BehaviorNode child
     boolean construct
     boolean prune
     boolean modify
@@ -33,10 +34,6 @@ class DecoratorNode extends BaseBehaviorNode {
         destruct = map['destruct']
 
         return map
-    }
-
-    void addChild(BehaviorNode child) {
-        this.child = child
     }
 
     @Override
@@ -89,5 +86,54 @@ class DecoratorNode extends BaseBehaviorNode {
     @Override
     void assembleTearDown() {
         child.assembleTearDown()
+    }
+
+    @Override
+    public void insertChild(int index, BehaviorNode newChild) {
+        this.child = newChild;
+    }
+
+    @Override
+    public void replaceChild(int index, BehaviorNode newChild) {
+        this.child = newChild;
+    }
+
+    @Override
+    public BehaviorNode removeChild(int index) {
+        BehaviorNode old = child;
+        child = null;
+        return old;
+    }
+
+    @Override
+    public BehaviorNode getChild(int index) {
+        return child;
+    }
+
+    @Override
+    public int getChildrenCount() {
+        return child == null ? 0 : 1;
+    }
+
+    @Override
+    public int getMaxChildren() {
+        return 1;
+    }
+
+    public BehaviorNode getChild() {
+        return child;
+    }
+
+    public void setChild(BehaviorNode child) {
+        this.child = child;
+    }
+
+    @Override
+    public <T> T visit(T item, Visitor<T> visitor) {
+        T visit = super.visit(item, visitor);
+        if (child != null) {
+            child.visit(visit, visitor);
+        }
+        return visit;
     }
 }

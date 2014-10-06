@@ -14,6 +14,7 @@ import org.synopia.behavior.nodes.SucceedNode
  * Created by synopia on 12.07.2014.
  */
 class BTreeBuilder extends BuilderSupport {
+    static int id = 1;
     @Override
     protected void setParent(Object parent, Object child) {
         parent.addChild(child);
@@ -41,6 +42,12 @@ class BTreeBuilder extends BuilderSupport {
         }
     }
 
+    protected static BehaviorNode assignId(BehaviorNode node) {
+        node.id = id;
+        id++;
+        node
+    }
+
     @Override
     protected Object createNode(Object name) {
         return createNode(name, null, null);
@@ -58,7 +65,7 @@ class BTreeBuilder extends BuilderSupport {
 
     @Override
     protected Object createNode(Object name, Map attributes, Object value) {
-        def node = new DebugDecorator(create((String) name));
+        def node = new DebugDecorator(assignId(create((String) name)));
 
         if (attributes) {
             node.setAttributes(attributes)
