@@ -49,17 +49,13 @@ public class UnsafeMemory {
         return buffer.getDouble(index);
     }
 
-    public String getString(int index, Charset charset) {
-        return getString(index, length(), charset);
-    }
-
     public String getStringUTF8(int index) {
-        return getString(index, length(), Charset.forName("UTF8"));
+        int len = getShort(index);
+        return getString(index + 2, len, Charset.forName("UTF8"));
     }
 
     public String getString(int index, int length, Charset charset) {
-//        return new String(buffer, index + (int) position, length, charset);
-        return null;
+        return new String(buffer.array(), index, length, charset);
     }
 
     public void setByte(int index, byte b) {
@@ -87,6 +83,11 @@ public class UnsafeMemory {
     }
 
     public void setString(int index, String value) {
+        byte[] bytes = value.getBytes(Charset.forName("UTF8"));
+        setShort(index, bytes.length);
+        for (int i = 0; i < bytes.length; i++) {
+            setByte(2 + index + i, bytes[i]);
+        }
     }
 
     public int length() {

@@ -5,15 +5,11 @@ import org.synopia.behavior.commands.lib.DelayCommand;
 import org.synopia.behavior.commands.lib.IfCommand;
 import org.synopia.behavior.commands.lib.PrintCommand;
 import org.synopia.behavior.tree.CompiledBehaviorTree;
-import org.synopia.behavior.tree.Context;
 import org.synopia.behavior.tree.BehaviorAction;
 import org.synopia.behavior.tree.BehaviorState;
 import org.synopia.behavior.tree.Callback;
 import org.synopia.behavior.tree.DebugCallback;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -92,11 +92,23 @@ class BTMethodGenerator extends GeneratorAdapter {
 
     void popDebug(BehaviorNode node, BehaviorAction action) {
         if (node.debug(action)) {
-            loadThis()
-            getField(Type.getType("pkg/Foo"), "debugCallback", Type.getType(DebugCallback.class))
-            push(-1)
-            Method m = Method.getMethod("void pop(int)")
-            invokeInterface(Type.getType(DebugCallback.class), m)
+            if (action == BehaviorAction.EXECUTE) {
+                reserveLocal { local ->
+                    storeLocal(local)
+                    loadThis()
+                    getField(Type.getType("pkg/Foo"), "debugCallback", Type.getType(DebugCallback.class))
+                    loadLocal(local)
+                    Method m = Method.getMethod("void pop(int)")
+                    invokeInterface(Type.getType(DebugCallback.class), m)
+                    loadLocal(local)
+                }
+            } else {
+                loadThis()
+                getField(Type.getType("pkg/Foo"), "debugCallback", Type.getType(DebugCallback.class))
+                push(-1)
+                Method m = Method.getMethod("void pop(int)")
+                invokeInterface(Type.getType(DebugCallback.class), m)
+            }
         }
     }
 }

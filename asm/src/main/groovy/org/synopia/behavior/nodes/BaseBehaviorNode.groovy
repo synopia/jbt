@@ -141,6 +141,11 @@ abstract class BaseBehaviorNode implements BehaviorNode<BehaviorNode> {
         return target
     }
 
+    public void addChild(BehaviorNode child) {
+        insertChild(-1, child);
+        child.parent = this
+    }
+
     @Override
     void insertChild(int index, BehaviorNode child) {
         throw new IllegalStateException("Not allowed");

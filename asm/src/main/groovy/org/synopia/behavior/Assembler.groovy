@@ -16,11 +16,20 @@ import static org.objectweb.asm.Opcodes.V1_5
 class Assembler {
     ClassWriter cw
     BTClassGenerator cg
+    String className
 
-    Assembler() {
+    Assembler(String className) {
+        this.className = className
         cw = new ClassWriter(ClassWriter.COMPUTE_MAXS)
         cg = new BTClassGenerator(cw)
-        cg.visit(V1_5, ACC_PUBLIC, "pkg/Foo", null, Type.getType(CompiledBehaviorTree.class).className.replaceAll("\\.", '/'), null)
+        cg.visit(V1_5, ACC_PUBLIC, className.replaceAll("\\.", "/"), null, Type.getType(CompiledBehaviorTree.class).className.replaceAll("\\.", '/'), null)
+    }
+
+    public static BehaviorNode buildFromScript(InputStream stream) {
+        Binding binding = new Binding();
+        binding.setProperty("builder", new BTreeBuilder());
+        GroovyShell shell = new GroovyShell(this.getClass().getClassLoader(), binding);
+        return (BehaviorNode) shell.evaluate(new InputStreamReader(stream));
     }
 
     def assemble(BehaviorNode tree) {
@@ -34,7 +43,7 @@ class Assembler {
 
     CompiledBehaviorTree createInstance() {
         def loader = new MyClassLoader(this.class.classLoader)
-        Class c = loader.defineClass("pkg.Foo", cw.toByteArray());
+        Class c = loader.defineClass(className, cw.toByteArray());
         c.newInstance()
     }
 

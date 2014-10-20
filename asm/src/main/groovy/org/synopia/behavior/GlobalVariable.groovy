@@ -1,5 +1,6 @@
 package org.synopia.behavior
 
+import org.synopia.behavior.tree.Context
 import org.synopia.behavior.tree.UnsafeMemory
 
 /**
@@ -19,7 +20,7 @@ class GlobalVariable {
         constructValue = value
         this.type = value.class
         this.memoryOffset = memoryOffset
-        this.size = UnsafeMemory.sizeOf(type)
+        this.size = type == String.class ? value.getBytes().length + 2 : UnsafeMemory.sizeOf(type)
     }
 
     int memoryPosition() {
@@ -30,6 +31,10 @@ class GlobalVariable {
         size > 0
     }
 
+    Object read(Context context) {
+        context."read${methodName()}"()
+    }
+
     String methodName() {
         switch (type) {
             case Byte.class: return "Byte"
@@ -38,6 +43,7 @@ class GlobalVariable {
             case Long.class: return "Long"
             case Float.class: return "Float"
             case Double.class: return "Double"
+            case String.class: return "String"
             default: throw new IllegalStateException("Unsupported type $type");
         }
     }
@@ -50,6 +56,7 @@ class GlobalVariable {
             case Long.class: return "long"
             case Float.class: return "float"
             case Double.class: return "double"
+            case String.class: return "String"
             default: throw new IllegalStateException("Unsupported type $type");
         }
     }

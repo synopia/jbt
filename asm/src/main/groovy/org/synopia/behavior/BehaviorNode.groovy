@@ -3,6 +3,10 @@ package org.synopia.behavior
  * Created by synopia on 12.07.2014.
  */
 interface BehaviorNode<N> {
+    int getId();
+
+    void setId(int id);
+
     void insertChild(int index, N child);
 
     void replaceChild(int index, N child);

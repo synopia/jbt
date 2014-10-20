@@ -23,6 +23,14 @@ subprojects {
         testCompile 'junit:junit:4.11'
     }
 
+    task tera(dependsOn: "jar") << {
+        copy {
+            from 'build/libs'
+            into '../../Terasology/engine/libs'
+            include '*.jar'
+        }
+
+    }
 
     publishing {
         publications {

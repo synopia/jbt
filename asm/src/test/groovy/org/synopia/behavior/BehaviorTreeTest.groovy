@@ -6,7 +6,6 @@ import org.synopia.behavior.tree.BehaviorAction
 import org.synopia.behavior.tree.BehaviorState
 import org.synopia.behavior.tree.Callback
 import org.synopia.behavior.tree.CompiledBehaviorTree
-import org.synopia.behavior.tree.Context
 import org.synopia.behavior.tree.DebugCallback
 import org.synopia.behavior.tree.UnsafeMemory
 
@@ -34,7 +33,7 @@ class BehaviorTreeTest {
                 }
             }
         }
-        def assembler = new Assembler()
+        def assembler = new Assembler("pkg.Foo")
         def tree = assembler.assemble(f())
         def sample = assembler.createInstance(new Callback() {
             @Override
@@ -72,7 +71,7 @@ class BehaviorTreeTest {
     }
 
     void testTree(int expectedMem, List states, List execute, Closure f = null) {
-        def assembler = new Assembler()
+        def assembler = new Assembler("pkg.Foo")
         def tree = assembler.assemble(f())
         def actualExecute = []
         sample = assembler.createInstance(new Callback() {

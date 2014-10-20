@@ -31,6 +31,7 @@ class LocalsTest extends BehaviorTreeTest {
             [d1: 0d],
             [d2: Double.MIN_VALUE],
             [d3: Double.MAX_VALUE],
+            [st: "XYZ"],
     ]
 
     @Test
@@ -60,11 +61,12 @@ class LocalsTest extends BehaviorTreeTest {
             case Long.class: return context.readLong()
             case Float.class: return context.readFloat()
             case Double.class: return context.readDouble()
+            case String.class: return context.readString()
         }
     }
 
     def runAction(def tree, String cmd, Closure construct, Closure execute, Closure destruct) {
-        def assembler = new Assembler()
+        def assembler = new Assembler("pkg.Foo")
         tree.assemble(assembler.cg)
 
         def dispatcher = new Dispatcher(assembler.createInstance())
@@ -108,7 +110,7 @@ class LocalsTest extends BehaviorTreeTest {
             action(id: 1, command: "xyz", locals: [[x: 43], [y: 23456]])
         }
 
-        def assembler = new Assembler()
+        def assembler = new Assembler("pkg.Foo")
         tree.assemble(assembler.cg)
 
         def dispatcher = new Dispatcher(assembler.createInstance())

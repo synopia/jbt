@@ -9,10 +9,6 @@ import org.synopia.behavior.Visitor
 class CompositeNode extends BaseBehaviorNode {
     protected List<BehaviorNode> children = []
 
-    public void addChild(BehaviorNode child) {
-        children << child;
-    }
-
     @Override
     String toString() {
         return super.toString();

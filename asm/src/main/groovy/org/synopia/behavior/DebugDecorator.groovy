@@ -80,7 +80,17 @@ class DebugDecorator implements BehaviorNode {
     }
 
     @Override
-    def <T> T visit(Object item, Visitor<T> visitor) {
+    public <T> T visit(T item, Visitor<T> visitor) {
         return delegate.visit(item, visitor);
+    }
+
+    @Override
+    int getId() {
+        delegate.getId()
+    }
+
+    @Override
+    void setId(int id) {
+        delegate.setId(id)
     }
 }

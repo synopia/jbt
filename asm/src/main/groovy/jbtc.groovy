@@ -97,7 +97,7 @@ def run(Assembler assembler, int count) {
     if (count == 0) {
         return
     }
-    def dispatcher = new Dispatcher(assembler.createInstance())
+    def dispatcher = new Dispatcher(assembler.createInstance("pkg.Foo"))
     print("running")
     count.times {
 //    while(true) {

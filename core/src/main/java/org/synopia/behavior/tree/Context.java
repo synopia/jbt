@@ -1,7 +1,5 @@
 package org.synopia.behavior.tree;
 
-import org.synopia.behavior.tree.UnsafeMemory;
-
 /**
  * Created by synopia on 15.07.2014.
  */
@@ -61,6 +59,12 @@ public class Context {
     public double readDouble() {
         double res = memory.getDouble(memoryOffset + position);
         position += 8;
+        return res;
+    }
+
+    public String readString() {
+        String res = memory.getStringUTF8(memoryOffset + position);
+        position += res.getBytes().length;
         return res;
     }
 }

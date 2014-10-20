@@ -15,10 +15,10 @@ import org.synopia.behavior.nodes.SucceedNode
  */
 class BTreeBuilder extends BuilderSupport {
     static int id = 1;
+
     @Override
     protected void setParent(Object parent, Object child) {
-        parent.addChild(child);
-        child.parent = parent
+        parent.addChild(child)
     }
 
     protected static BehaviorNode create(String name) {
